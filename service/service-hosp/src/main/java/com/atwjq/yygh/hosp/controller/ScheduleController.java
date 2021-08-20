@@ -4,6 +4,7 @@ import com.atwjq.yygh.common.result.Result;
 import com.atwjq.yygh.hosp.service.ScheduleService;
 import com.atwjq.yygh.model.hosp.Schedule;
 import io.swagger.annotations.ApiOperation;
+import io.swagger.annotations.ApiParam;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -43,5 +44,13 @@ public class ScheduleController {
                                      @PathVariable String workDate) {
         List<Schedule> list = scheduleService.getDetailSchedule(hoscode,depcode,workDate);
         return Result.ok(list);
+    }
+
+    @ApiOperation(value = "根据排班id获取排班数据")
+    @GetMapping("getSchedule/{scheduleId}")
+    public Result getSchedule(
+            @ApiParam(name = "scheduleId", value = "排班id", required = true)
+            @PathVariable String scheduleId) {
+        return Result.ok(scheduleService.getById(scheduleId));
     }
 }

@@ -5,6 +5,7 @@ import com.atwjq.yygh.msm.service.MsmService;
 import com.atwjq.yygh.msm.utils.RandomUtils;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
+import lombok.extern.java.Log;
 import org.slf4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.RedisTemplate;
@@ -24,6 +25,7 @@ import java.util.concurrent.TimeUnit;
 @Api("短信接口")
 @RestController
 @RequestMapping("/api/msm")
+@Log
 public class MsmApiController {
 
     @Autowired
@@ -50,7 +52,7 @@ public class MsmApiController {
         boolean isSend=true;
         //生成验证码放到redis里面，设置有效时间
         if(isSend) {
-            System.out.println("保存验证码："+phone+"---"+code);
+            log.info("保存验证码："+phone+"---"+code);
             redisTemplate.opsForValue().set(phone,code,2, TimeUnit.MINUTES);
             return Result.ok();
         } else {

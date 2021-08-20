@@ -5,15 +5,16 @@
     <parent>
         <artifactId>yygh_parent</artifactId>
         <groupId>com.atwjq.yygh</groupId>
-        <version>0.0.1-SNAPSHOT</version>
+        <version>1.0</version>
     </parent>
     <modelVersion>4.0.0</modelVersion>
-
+    <version>1.0</version>
     <artifactId>common</artifactId>
     <packaging>pom</packaging>
     <modules>
         <module>common-util</module>
         <module>service-util</module>
+        <module>rabbit-util</module>
     </modules>
     <dependencies>
         <dependency>
@@ -43,6 +44,11 @@
         <dependency>
             <groupId>io.springfox</groupId>
             <artifactId>springfox-swagger-ui</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>com.alibaba</groupId>
+            <artifactId>fastjson</artifactId>
         </dependency>
     </dependencies>
 

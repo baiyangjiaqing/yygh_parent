@@ -53,6 +53,7 @@ public class ScheduleServiceImp implements ScheduleService {
     @Override
     public void save(Map<String, Object> paramMap) {
         Schedule schedule = JSONObject.parseObject(JSONObject.toJSONString(paramMap), Schedule.class);
+//        schedule.setWorkDate(new Date(schedule.getWorkDate().getTime()+28800000));
         Schedule targetSchedule = scheduleRepository.getScheduleByHoscodeAndHosScheduleId(schedule.getHoscode(), schedule.getHosScheduleId());
         if(null != targetSchedule) {
             BeanUtils.copyProperties(schedule, targetSchedule, Schedule.class);
@@ -138,8 +139,8 @@ public class ScheduleServiceImp implements ScheduleService {
             Date workDate = bookingScheduleRuleVo.getWorkDate();
             String dayOfWeek = this.getDayOfWeek(new DateTime(workDate));
             bookingScheduleRuleVo.setDayOfWeek(dayOfWeek);
+            log.info(bookingScheduleRuleVo.toString());
         }
-
         //设置最终数据，进行返回
         Map<String, Object> result = new HashMap<>();
         result.put("bookingScheduleRuleList",bookingScheduleRuleVoList);
@@ -332,6 +333,12 @@ public class ScheduleServiceImp implements ScheduleService {
     public void update(Schedule schedule) {
         schedule.setUpdateTime(new Date());
         scheduleRepository.save(schedule);
+    }
+
+    @Override
+    public Schedule getById(String id) {
+        Schedule schedule = scheduleRepository.findById(id).get();
+        return this.packageSchedule(schedule);
     }
 
     //封装排班详情其他值 医院名称、科室名称、日期对应星期

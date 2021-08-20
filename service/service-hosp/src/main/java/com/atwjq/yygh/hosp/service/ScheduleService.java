@@ -54,4 +54,11 @@ public interface ScheduleService {
 
     //更新排班数据 用于mp
     void update(Schedule schedule);
+
+    /**
+     * 根据id获取排班
+     * @param id
+     * @return
+     */
+    Schedule getById(String id);
 }

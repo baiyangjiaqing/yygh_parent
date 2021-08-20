@@ -32,7 +32,7 @@ import java.util.Objects;
  * @Description:
  * @CreateTime:2021-07-20-10:35
  */
-@Api(tags = "医院管理API接口")
+@Api(tags = "医院API接口")
 @RestController
 @RequestMapping("/api/hosp")
 public class ApiController {
@@ -79,7 +79,7 @@ public class ApiController {
             throw new YyghException(ResultCodeEnum.PARAM_ERROR);
         }
         //签名校验
-        if (!!checkSign(hoscode, paramMap)) {
+        if (!checkSign(hoscode, paramMap)) {
             throw new YyghException(ResultCodeEnum.SIGN_ERROR);
         }
 
