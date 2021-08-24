@@ -85,7 +85,7 @@ public class HospitalServiceImp implements HospitalService {
     @Override
     public Hospital getById(String id) {
         Hospital hospital
-                =hospitalRepository.getHospitalByHoscode(id);
+                =hospitalRepository.getHospitalById(id);
         return hospital;
     }
 

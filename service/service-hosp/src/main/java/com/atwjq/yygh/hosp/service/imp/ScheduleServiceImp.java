@@ -69,7 +69,7 @@ public class ScheduleServiceImp implements ScheduleService {
     @Override
     public Page<Schedule> selectPage(Integer page, Integer limit, ScheduleQueryVo scheduleQueryVo) {
 
-        Sort sort = Sort.by(Sort.Direction.DESC, "createTime");
+        Sort sort = Sort.by(Sort.Direction.DESC, "workDate");
 //0为第一页
         Pageable pageable = PageRequest.of(page-1, limit, sort);
 
