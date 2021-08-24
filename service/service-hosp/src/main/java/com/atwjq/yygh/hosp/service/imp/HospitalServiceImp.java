@@ -101,8 +101,13 @@ public class HospitalServiceImp implements HospitalService {
     @Override
     public Map<String, Object> show(String id) {
         Map<String, Object> result = new HashMap<>();
+        Hospital hospital;
+        if (id.length() >= 24) {
+            hospital = this.setHospitalHosType(this.getById(id));
+        }else {
+            hospital = this.setHospitalHosType(this.getByHoscode(id));
 
-        Hospital hospital = this.setHospitalHosType(this.getById(id));
+        }
         result.put("hospital", hospital);
 
 //单独处理更直观
