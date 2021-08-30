@@ -1,5 +1,7 @@
 package com.atwjq.yygh.msm.service;
 
+import com.atwjq.yygh.vo.msm.MsmVo;
+
 /**
  * @Auther:Administrator
  * @Description:
@@ -8,4 +10,8 @@ package com.atwjq.yygh.msm.service;
 public interface MsmService {
     //发送手机验证码
     boolean send(String phone, String code);
+
+    //mq发送短信的接口
+    boolean send(MsmVo msmVo);
+
 }

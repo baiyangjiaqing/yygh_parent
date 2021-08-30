@@ -48,8 +48,8 @@ public class MsmApiController {
         // 生成验证码，
         code = RandomUtils.getSixBitRandom();
         //调用service方法，通过整合短信服务进行发送
-//        boolean isSend = msmService.send(phone,code);
-        boolean isSend=true;
+        boolean isSend = msmService.send(phone,code);
+//        boolean isSend=true;
         //生成验证码放到redis里面，设置有效时间
         if(isSend) {
             log.info("保存验证码："+phone+"---"+code);

@@ -308,6 +308,7 @@ public class ScheduleServiceImp implements ScheduleService {
         scheduleOrderVo.setReserveDate(schedule.getWorkDate());
         scheduleOrderVo.setReserveTime(schedule.getWorkTime());
         scheduleOrderVo.setAmount(schedule.getAmount());
+        scheduleOrderVo.setHosScheduleId(schedule.getHosScheduleId());
 
         //退号截止天数（如：就诊前一天为-1，当天为0）
         int quitDay = bookingRule.getQuitDay();

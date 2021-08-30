@@ -82,6 +82,7 @@ public class OrderInfo extends BaseEntity {
 	@TableField("hos_record_id")
 	private String hosRecordId;
 
+
 	@ApiModelProperty(value = "预约号序")
 	@TableField("number")
 	private Integer number;

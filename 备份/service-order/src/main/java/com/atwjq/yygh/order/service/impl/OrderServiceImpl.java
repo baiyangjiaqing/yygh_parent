@@ -83,7 +83,7 @@ public class OrderServiceImpl extends
         Map<String, Object> paramMap = new HashMap<>();
         paramMap.put("hoscode",orderInfo.getHoscode());
         paramMap.put("depcode",orderInfo.getDepcode());
-        paramMap.put("hosScheduleId",scheduleOrderVo.getHosScheduleId());
+        paramMap.put("hosScheduleId",orderInfo.getScheduleId());
         paramMap.put("reserveDate",new DateTime(orderInfo.getReserveDate()).toString("yyyy-MM-dd"));
         paramMap.put("reserveTime", orderInfo.getReserveTime());
         paramMap.put("amount",orderInfo.getAmount());
@@ -113,7 +113,7 @@ public class OrderServiceImpl extends
         JSONObject result = HttpRequestHelper.sendRequest(paramMap, signInfoVo.getApiUrl() + "/order/submitOrder");
 
         if(result.getInteger("code")==200) {
-                JSONObject jsonObject = result.getJSONObject("data");
+            JSONObject jsonObject = result.getJSONObject("data");
             //预约记录唯一标识（医院预约记录主键）
             String hosRecordId = jsonObject.getString("hosRecordId");
             //预约序号
@@ -151,6 +151,7 @@ public class OrderServiceImpl extends
             }};
             msmVo.setParam(param);
             orderMqVo.setMsmVo(msmVo);
+
             rabbitService.sendMessage(MqConst.EXCHANGE_DIRECT_ORDER, MqConst.ROUTING_ORDER, orderMqVo);
         } else {
             throw new YyghException(result.getString("message"), ResultCodeEnum.FAIL.getCode());
@@ -235,7 +236,6 @@ public class OrderServiceImpl extends
         } else {
             //判断当前订单是否可以取消
             if(orderInfo.getOrderStatus().intValue() == OrderStatusEnum.PAID.getStatus().intValue()) {
-                //支付的情况下
 //                Boolean isRefund = weixinService.refund(orderId);
                 Boolean isRefund = true;
                 if(!isRefund) {
@@ -261,39 +261,7 @@ public class OrderServiceImpl extends
                 orderMqVo.setMsmVo(msmVo);
                 rabbitService.sendMessage(MqConst.EXCHANGE_DIRECT_ORDER, MqConst.ROUTING_ORDER, orderMqVo);
             }
-            baseMapper.deleteById(orderId);
         }
-        return true;
-    }
-
-    @Override
-    public Boolean payOrder(Long orderId) {
-        //获取订单信息
-        OrderInfo orderInfo = baseMapper.selectById(orderId);
-        if (null == orderInfo) {
-            throw new YyghException(ResultCodeEnum.DATA_ERROR);
-        }
-
-        //调用医院接口实现预约取消
-        SignInfoVo signInfoVo = hospitalFeignClient.getSignInfoVo(orderInfo.getHoscode());
-        if(null == signInfoVo) {
-            throw new YyghException(ResultCodeEnum.PARAM_ERROR);
-        }
-        Map<String, Object> reqMap = new HashMap<>();
-        reqMap.put("hoscode",orderInfo.getHoscode());
-        reqMap.put("hosRecordId",orderInfo.getHosRecordId());
-//        reqMap.put("timestamp", HttpRequestHelper.getTimestamp());
-        String sign = HttpRequestHelper.getSign(reqMap, signInfoVo.getSignKey());
-        reqMap.put("sign", sign);
-
-        JSONObject result = HttpRequestHelper.sendRequest(reqMap,
-                signInfoVo.getApiUrl()+"/order/updatePayStatus");
-        //根据医院接口返回数据
-        if(result.getInteger("code")!=200) {
-            throw new YyghException(result.getString("message"), ResultCodeEnum.FAIL.getCode());
-        }
-        orderInfo.setOrderStatus(1);
-        baseMapper.updateById(orderInfo);
         return true;
     }
 

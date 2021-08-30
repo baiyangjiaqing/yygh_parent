@@ -38,7 +38,7 @@ public class HospitalSetServiceImp extends ServiceImpl<HospitalMapper, HospitalS
     @Override
     public SignInfoVo getSignInfoVo(String hoscode) {
         QueryWrapper<HospitalSet> wrapper = new QueryWrapper<>();
-        wrapper.eq("hoscode",hoscode);
+        wrapper.eq("hos_code",hoscode);
         HospitalSet hospitalSet = baseMapper.selectOne(wrapper);
         if(null == hospitalSet) {
             throw new YyghException(ResultCodeEnum.HOSPITAL_OPEN);

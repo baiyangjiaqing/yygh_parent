@@ -33,7 +33,7 @@ public class OrderApiController {
     }
 
     //根据订单id查询订单详情
-    @GetMapping("auth/getOrderInfo/{orderId}")
+    @GetMapping("auth/getOrders/{orderId}")
     public Result getOrders(@PathVariable String orderId) {
         OrderInfo orderInfo = orderService.getOrder(orderId);
         return Result.ok(orderInfo);
@@ -62,13 +62,6 @@ public class OrderApiController {
     @GetMapping("auth/cancelOrder/{orderId}")
     public Result cancelOrder(@PathVariable Long orderId) {
         Boolean isOrder = orderService.cancelOrder(orderId);
-        return Result.ok(isOrder);
-    }
-
-    //支付
-    @GetMapping("auth/payOrder/{orderId}")
-    public Result payOrder(@PathVariable Long orderId) {
-        Boolean isOrder = orderService.payOrder(orderId);
         return Result.ok(isOrder);
     }
 

@@ -1,5 +1,6 @@
 package com.atwjq.yygh.vo.hosp;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
@@ -30,6 +31,7 @@ public class ScheduleOrderVo {
 	private String title;
 
 	@ApiModelProperty(value = "安排日期")
+	@JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
 	private Date reserveDate;
 
 	@ApiModelProperty(value = "剩余预约数")
@@ -42,15 +44,19 @@ public class ScheduleOrderVo {
 	private BigDecimal amount;
 
 	@ApiModelProperty(value = "退号时间")
+	@JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
 	private Date quitTime;
 
 	@ApiModelProperty(value = "挂号开始时间")
+	@JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
 	private Date startTime;
 
 	@ApiModelProperty(value = "挂号结束时间")
+	@JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
 	private Date endTime;
 
 	@ApiModelProperty(value = "当天停止挂号时间")
+	@JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
 	private Date stopTime;
 }
 
